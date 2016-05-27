@@ -9,10 +9,15 @@ import configureStore from './store/configureStore';
 require('./favicon.ico'); // Tell webpack to load favicon.ico
 import './styles/styles.scss'; // Yep, that's right. You can import SASS/CSS files too! Webpack will run the associated loader and plug this into the page.
 
-const store = configureStore();
+import ApolloClient from 'apollo-client';
+import { ApolloProvider } from 'react-apollo';
+
+const client = new ApolloClient();
+
+const store = configureStore({}, client);
 
 render(
-  <Provider store={store}>
+  <ApolloProvider store={store} client={client}>
     <Router history={browserHistory} routes={routes} />
-  </Provider>, document.getElementById('app')
+  </ApolloProvider>, document.getElementById('app')
 );
